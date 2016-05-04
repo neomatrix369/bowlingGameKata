@@ -22,6 +22,13 @@ public class BowlingGameShould {
     assertThat(frames, is(lessThan(10)));
   }
 
+  @Test public void
+  contains_7_frames_when_player_has_played_7_turns() {
+    int frames = playGame("1|2|3|4|5|6|7");
+
+    assertThat(frames, is(7));
+  }
+
   private int playGame(String bowlerThrows) {
     final BowlingGame bowlingGame = new BowlingGame(bowlerThrows);
     return bowlingGame.getFrames();

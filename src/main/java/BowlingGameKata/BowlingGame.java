@@ -8,6 +8,6 @@ public class BowlingGame {
   }
 
   public int getFrames() {
-    return bowlerThrows.length() == 19 ? 10 : 3;
+    return bowlerThrows.split("\\|").length;
   }
 }
