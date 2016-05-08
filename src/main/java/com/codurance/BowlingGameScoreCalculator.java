@@ -13,65 +13,75 @@ public class BowlingGameScoreCalculator {
   private static final String MISS = "-";
   private static final int MISS_SCORE = 0;
 
+  private static final int NO_SCORE = 0;
+
   private static final String FRAME_SEPARATOR = "\\|";
+  private static final String EMPTY_STRING_REPLACEMENT = "0";
+
+  private String[] splitFrames;
 
   public int evaluate(String framesWithThrows, int forFrame) {
-    int internalForFrame = forFrame - 1;
-    String splitFrames[] =  framesWithThrows.split(FRAME_SEPARATOR);
+    splitFrames = framesWithThrows.split(FRAME_SEPARATOR);
 
-    return getFrameScore(splitFrames, internalForFrame);
+    return evaluateScore(forFrame - 1);
   }
 
-  private int evaluateFrame(String[] splitFrames, int forFrame) {
+  private int evaluateScore(int forFrame) {
     if (forFrame >= splitFrames.length) {
-      return 0;
+      return NO_SCORE;
     }
 
-    return calculateFrameScore(splitFrames, forFrame);
+    return calculateScore(forFrame);
   }
 
-  private int calculateFrameScore(String[] splitFrames, int forFrame) {
+  private int calculateScore(int forFrame) {
     int framesScore = 0;
-    String eachFrame = splitFrames[forFrame];
+    String thisFrame = getFrame(forFrame);
 
-    if (eachFrame.equals(STRIKE)) {
-      framesScore += evaluateFrameWithStrike(splitFrames, forFrame);
-    } else if (eachFrame.substring(1).equals(SPARE)) {
-      framesScore += evaluateFrameWithSpare(splitFrames, forFrame);
+    if (thisFrame.equals(STRIKE)) {
+      framesScore += calculateForStrike(forFrame);
+    } else if (thisFrame.substring(1).equals(SPARE)) {
+      framesScore += calculateForSpare(forFrame);
     } else {
-      framesScore += evaluateOtherThrowsInTheFrame(eachFrame);
+      framesScore += calculateForOtherThrows(forFrame);
     }
 
     return framesScore;
   }
 
-  private int evaluateFrameWithStrike(String[] splitFrames, int forFrame) {
-    final int nextFrame = forFrame + 1;
-    return STRIKE_SCORE + getFrameScore(splitFrames, nextFrame);
+  private int calculateForOtherThrows(int forFrame) {
+    final String firstThrow = firstThrowFrom(forFrame);
+    final String secondThrow = secondThrowFrom(forFrame);
+
+    return evaluateThisThrow(firstThrow) + evaluateThisThrow(secondThrow);
   }
 
-  private int getFrameScore(String[] splitFrames, int nextFrame) {return evaluateFrame(splitFrames, nextFrame);}
+  private String getFrame(int frame) {
+    if (frame >= splitFrames.length) {
+      return EMPTY_STRING_REPLACEMENT;
+    }
+    return splitFrames[frame];
+  }
 
-  private int evaluateFrameWithSpare(String[] splitFrames, int forFrame) {
-    final int nextFrame = forFrame + 1;
-    String firstThrow = firstThrowFrom(splitFrames, nextFrame);
+  private int calculateForStrike(int forTheFrame) {
+    final int forTheNextFrame = forTheFrame + 1;
+    return STRIKE_SCORE + evaluateScore(forTheNextFrame);
+  }
+
+  private int calculateForSpare(int forFrame) {
+    final int theNextFrame = forFrame + 1;
+    String firstThrow = firstThrowFrom(theNextFrame);
     return SPARE_SCORE + parseInt(firstThrow);
   }
 
-  private String firstThrowFrom(String[] splitFrames, int frame) {
-    if (frame >= splitFrames.length) {
-      return "0";
-    }
-
-    String thisFrame = splitFrames[frame];
+  private String firstThrowFrom(int frame) {
+    String thisFrame = getFrame(frame);
     return thisFrame.substring(0, 1);
   }
 
-  private int evaluateOtherThrowsInTheFrame(String eachFrame) {
-    final String firstThrow = eachFrame.substring(0, 1);
-    final String secondThrow = eachFrame.substring(1);
-
-    return evaluateThisThrow(firstThrow) + evaluateThisThrow(secondThrow);
+  private String secondThrowFrom(int frame) {
+    String thisFrame = getFrame(frame);
+    return thisFrame.substring(1);
   }
 
   private int evaluateThisThrow(String aThrow) {
