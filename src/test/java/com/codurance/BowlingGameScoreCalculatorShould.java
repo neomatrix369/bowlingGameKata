@@ -31,5 +31,14 @@ public class BowlingGameScoreCalculatorShould {
     int frameScore = bowlingGameScoreCalculator.evaluate("9-|", 1);
 
     assertThat(frameScore, is(9));
-  } 
+  }
+
+  @Test public void
+  calculate_frame_score_for_5_pins_hit_and_a_spare_in_the_first_frame() {
+    BowlingGameScoreCalculator bowlingGameScoreCalculator = new BowlingGameScoreCalculator();
+
+    int frameScore = bowlingGameScoreCalculator.evaluate("5/|", 1);
+
+    assertThat(frameScore, is(10));
+  }
 }
