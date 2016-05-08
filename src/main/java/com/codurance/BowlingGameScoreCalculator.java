@@ -15,11 +15,11 @@ public class BowlingGameScoreCalculator {
 
   private static final String FRAME_SEPARATOR = "\\|";
 
-  public int evaluate(String frames, int forFrame) {
+  public int evaluate(String framesWithThrows, int forFrame) {
     int internalForFrame = forFrame - 1;
-    String splitFrames[] = frames.split(FRAME_SEPARATOR);
+    String splitFrames[] =  framesWithThrows.split(FRAME_SEPARATOR);
 
-    return evaluateFrame(splitFrames, internalForFrame);
+    return getFrameScore(splitFrames, internalForFrame);
   }
 
   private int evaluateFrame(String[] splitFrames, int forFrame) {
@@ -36,6 +36,8 @@ public class BowlingGameScoreCalculator {
 
     if (eachFrame.equals(STRIKE)) {
       framesScore += evaluateFrameWithStrike(splitFrames, forFrame);
+    } else if (eachFrame.substring(1).equals(SPARE)) {
+      framesScore += evaluateFrameWithSpare(splitFrames, forFrame);
     } else {
       framesScore += evaluateOtherThrowsInTheFrame(eachFrame);
     }
@@ -45,16 +47,29 @@ public class BowlingGameScoreCalculator {
 
   private int evaluateFrameWithStrike(String[] splitFrames, int forFrame) {
     final int nextFrame = forFrame + 1;
-    return STRIKE_SCORE + evaluateFrame(splitFrames, nextFrame);
+    return STRIKE_SCORE + getFrameScore(splitFrames, nextFrame);
+  }
+
+  private int getFrameScore(String[] splitFrames, int nextFrame) {return evaluateFrame(splitFrames, nextFrame);}
+
+  private int evaluateFrameWithSpare(String[] splitFrames, int forFrame) {
+    final int nextFrame = forFrame + 1;
+    String firstThrow = firstThrowFrom(splitFrames, nextFrame);
+    return SPARE_SCORE + parseInt(firstThrow);
+  }
+
+  private String firstThrowFrom(String[] splitFrames, int frame) {
+    if (frame >= splitFrames.length) {
+      return "0";
+    }
+
+    String thisFrame = splitFrames[frame];
+    return thisFrame.substring(0, 1);
   }
 
   private int evaluateOtherThrowsInTheFrame(String eachFrame) {
     final String firstThrow = eachFrame.substring(0, 1);
     final String secondThrow = eachFrame.substring(1);
-
-    if (secondThrow.equals(SPARE)) {
-      return SPARE_SCORE;
-    }
 
     return evaluateThisThrow(firstThrow) + evaluateThisThrow(secondThrow);
   }

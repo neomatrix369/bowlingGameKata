@@ -35,5 +35,10 @@ public class BowlingGameScoreCalculatorShould {
     assertThat(getFrameScoreFor("5/|"), is(10));
   }
 
+  @Test public void
+  calculate_frame_score_for_5_pins_hit_and_a_spare_in_the_first_frame_followed_by_one_of_the_two_throws_in_the_next_frame() {
+    assertThat(getFrameScoreFor("5/|23"), is(12));
+  }
+
   private int getFrameScoreFor(String frames) {return bowlingGameScoreCalculator.evaluate(frames, 1);}
 }
