@@ -10,6 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
 
 @RunWith(Parameterized.class)
 public class BowlingGameScoreCalculatorShould {
@@ -19,15 +20,15 @@ public class BowlingGameScoreCalculatorShould {
 
   private BowlingGameScoreCalculator bowlingGameScoreCalculator;
 
-  @Parameterized.Parameters
+  @Parameters( name = "{index}: {0} = {1}" )
   public static Collection<Object[]> data() {
     return asList(
         new Object[][] {
-            { new Frames("X|"),    10         },
-            { new Frames("X|64"),  10 + 6 + 4 },
-            { new Frames("9-|"),   9          },
-            { new Frames("5/|"),   5 + 5      },
-            { new Frames("5/|23"), 5 + 5 + 2  }
+            { new Frames("X|"),   10         },
+            { new Frames("X|64"), 10 + 6 + 4 },
+            { new Frames("9-|"),   9         },
+            { new Frames("5/|"),   5 + 5     },
+            { new Frames("5/|23"), 5 + 5 + 2 }
         }
     );
   }
