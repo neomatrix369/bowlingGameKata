@@ -40,12 +40,12 @@ public class Frame {
     return parseInt(aThrow);
   }
 
+  public int getFirstThrowScore() {
+    return parseInt(firstThrow());
+  }
+
   @Override
   public String toString() {
     return String.format("%s", throwsInAFrame);
-  }
-
-  public int getFirstThrowScore() {
-    return parseInt(firstThrow());
   }
 }

@@ -29,16 +29,13 @@ public class Frames {
     }
 
     Frame thisFrame = getFrame(frameIndex);
-    int frameScore;
     if (thisFrame.firstThrowIsA(STRIKE)) {
-      frameScore =+ calculateForStrike(frameIndex);
+      return calculateForStrike(frameIndex);
     } else if (thisFrame.secondThrowIsA(SPARE)) {
-      frameScore =+ calculateForSpare(frameIndex);
+      return calculateForSpare(frameIndex);
     } else {
-      frameScore =+ thisFrame.getScore();
+      return thisFrame.getScore();
     }
-
-    return frameScore;
   }
 
   private int calculateForSpare(int forTheFrame) {
