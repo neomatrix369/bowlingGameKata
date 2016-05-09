@@ -3,6 +3,6 @@ package com.codurance;
 public class BowlingGameScoreCalculator {
 
   public int evaluate(Frames framesWithThrows, int forFrame) {
-    return framesWithThrows.calculateScore(forFrame - 1);
+    return framesWithThrows.calculateScore(forFrame);
   }
 }

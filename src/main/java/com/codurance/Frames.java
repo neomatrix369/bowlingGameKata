@@ -24,6 +24,7 @@ public class Frames {
   }
 
   public int calculateScore(int frameIndex) {
+    frameIndex--;
     if (frameIndex >= list.size()) {
       return NO_SCORE;
     }
