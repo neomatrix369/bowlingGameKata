@@ -1,51 +1,44 @@
 package com.codurance;
 
-import static com.codurance.ThrowType.MISS;
-import static java.lang.Integer.parseInt;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Frame {
-  private final String throwsInAFrame;
+  private static final int FIRST_THROW = 0;
+  private static final int SECOND_THROW = 1;
 
-  public Frame(String throwsInAFrame) {
-    this.throwsInAFrame = throwsInAFrame;
+  private final List<Throw> throwsList = new ArrayList<>();
+
+  public Frame(String throwsList) {
+    final String[] splitThrows = throwsList.split("");
+
+    for (String eachThrow: splitThrows) {
+      this.throwsList.add(new Throw(eachThrow));
+    }
   }
 
-  public boolean firstThrowIsA(ThrowType throwType) {
-    return throwType.isSameAs(firstThrow());
+  public boolean isA(ThrowType throwType) {
+    return firstThrow().isSameAs(throwType) || secondThrow().isSameAs(throwType);
   }
 
-  public boolean secondThrowIsA(ThrowType throwType) {
-    return throwType.isSameAs(secondThrow());
+  public Throw firstThrow() {
+    return throwsList.get(FIRST_THROW);
   }
 
-  public String firstThrow() {
-    return throwsInAFrame.substring(0, 1);
-  }
-
-  public String secondThrow() {
-    return throwsInAFrame.substring(1);
+  public Throw secondThrow() {
+    return throwsList.get(SECOND_THROW);
   }
 
   public int getScore() {
-    final String firstThrow = firstThrow();
-    final String secondThrow = secondThrow();
-
-    return calculateScore(firstThrow) + calculateScore(secondThrow);
-  }
-
-  private int calculateScore(String aThrow) {
-    if (MISS.isSameAs(aThrow)) {
-      return MISS.getScore();
-    }
-    return parseInt(aThrow);
+    return firstThrow().getScore() + secondThrow().getScore();
   }
 
   public int getFirstThrowScore() {
-    return parseInt(firstThrow());
+    return firstThrow().getScore();
   }
 
   @Override
   public String toString() {
-    return String.format("%s", throwsInAFrame);
+    return String.format("%s", throwsList);
   }
 }

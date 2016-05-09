@@ -29,9 +29,9 @@ public class Frames {
     }
 
     Frame thisFrame = getFrame(frameIndex);
-    if (thisFrame.firstThrowIsA(STRIKE)) {
+    if (thisFrame.isA(STRIKE)) {
       return calculateForStrike(frameIndex);
-    } else if (thisFrame.secondThrowIsA(SPARE)) {
+    } else if (thisFrame.isA(SPARE)) {
       return calculateForSpare(frameIndex);
     } else {
       return thisFrame.getScore();
