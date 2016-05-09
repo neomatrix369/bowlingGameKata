@@ -1,5 +1,8 @@
 package com.codurance;
 
+import static com.codurance.ThrowType.SPARE;
+import static com.codurance.ThrowType.STRIKE;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,8 +12,8 @@ public class Frame {
 
   private final List<Throw> throwsList = new ArrayList<>();
 
-  public Frame(String throwsList) {
-    final String[] splitThrows = throwsList.split("");
+  public Frame(String throwsInAFrame) {
+    final String[] splitThrows = throwsInAFrame.split("");
 
     for (String eachThrow: splitThrows) {
       this.throwsList.add(new Throw(eachThrow));
@@ -35,6 +38,14 @@ public class Frame {
 
   public int getFirstThrowScore() {
     return firstThrow().getScore();
+  }
+
+  public int calculateStrikeScore(Frame nextFrame) {
+    return STRIKE.getScore() + nextFrame.getScore();
+  }
+
+  public int calculateSpareScore(Frame nextFrame) {
+    return SPARE.getScore() + nextFrame.getFirstThrowScore();
   }
 
   @Override

@@ -29,23 +29,14 @@ public class Frames {
     }
 
     Frame thisFrame = getFrame(frameIndex);
+    Frame nextFrame = getFrame(frameIndex + 1);
     if (thisFrame.isA(STRIKE)) {
-      return calculateForStrike(frameIndex);
+      return thisFrame.calculateStrikeScore(nextFrame);
     } else if (thisFrame.isA(SPARE)) {
-      return calculateForSpare(frameIndex);
-    } else {
-      return thisFrame.getScore();
+      return thisFrame.calculateSpareScore(nextFrame);
     }
-  }
 
-  private int calculateForSpare(int forTheFrame) {
-    Frame theNextFrame = getFrame(forTheFrame + 1);
-    return SPARE.getScore() + theNextFrame.getFirstThrowScore();
-  }
-
-  private int calculateForStrike(int forTheFrame) {
-    Frame theNextFrame = getFrame(forTheFrame + 1);
-    return STRIKE.getScore() + theNextFrame.getScore();
+    return thisFrame.getScore();
   }
 
   private Frame getFrame(int frameIndex) {
