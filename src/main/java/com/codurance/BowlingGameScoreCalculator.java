@@ -23,18 +23,14 @@ public class BowlingGameScoreCalculator {
   public int evaluate(String framesWithThrows, int forFrame) {
     splitFrames = framesWithThrows.split(FRAME_SEPARATOR);
 
-    return evaluateScore(forFrame - 1);
+    return calculateScore(forFrame - 1);
   }
 
-  private int evaluateScore(int forFrame) {
+  private int calculateScore(int forFrame) {
     if (forFrame >= splitFrames.length) {
       return NO_SCORE;
     }
 
-    return calculateScore(forFrame);
-  }
-
-  private int calculateScore(int forFrame) {
     int framesScore = 0;
     String thisFrame = getFrame(forFrame);
 
@@ -49,9 +45,20 @@ public class BowlingGameScoreCalculator {
     return framesScore;
   }
 
-  private int calculateForOtherThrows(int forFrame) {
-    final String firstThrow = firstThrowFrom(forFrame);
-    final String secondThrow = secondThrowFrom(forFrame);
+  private int calculateForStrike(int forTheFrame) {
+    final int forTheNextFrame = forTheFrame + 1;
+    return STRIKE_SCORE + calculateScore(forTheNextFrame);
+  }
+
+  private int calculateForSpare(int forTheFrame) {
+    final int theNextFrame = forTheFrame + 1;
+    String firstThrow = firstThrowFrom(theNextFrame);
+    return SPARE_SCORE + parseInt(firstThrow);
+  }
+
+  private int calculateForOtherThrows(int forTheFrame) {
+    final String firstThrow = firstThrowFrom(forTheFrame);
+    final String secondThrow = secondThrowFrom(forTheFrame);
 
     return evaluateThisThrow(firstThrow) + evaluateThisThrow(secondThrow);
   }
@@ -61,17 +68,6 @@ public class BowlingGameScoreCalculator {
       return EMPTY_STRING_REPLACEMENT;
     }
     return splitFrames[frame];
-  }
-
-  private int calculateForStrike(int forTheFrame) {
-    final int forTheNextFrame = forTheFrame + 1;
-    return STRIKE_SCORE + evaluateScore(forTheNextFrame);
-  }
-
-  private int calculateForSpare(int forFrame) {
-    final int theNextFrame = forFrame + 1;
-    String firstThrow = firstThrowFrom(theNextFrame);
-    return SPARE_SCORE + parseInt(firstThrow);
   }
 
   private String firstThrowFrom(int frame) {
