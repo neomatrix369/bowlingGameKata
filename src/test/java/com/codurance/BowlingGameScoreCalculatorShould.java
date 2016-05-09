@@ -27,6 +27,7 @@ public class BowlingGameScoreCalculatorShould {
             { new Frames("X|"),   10         },
             { new Frames("X|64"), 10 + 6 + 4 },
             { new Frames("9-|"),   9         },
+            { new Frames("-6|"),   6         },
             { new Frames("5/|"),   5 + 5     },
             { new Frames("5/|23"), 5 + 5 + 2 }
         }
