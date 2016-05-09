@@ -14,7 +14,7 @@ import org.junit.runners.Parameterized;
 @RunWith(Parameterized.class)
 public class BowlingGameScoreCalculatorShould {
 
-  private final String inputFrames;
+  private final Frames inputFrames;
   private final int expectedFrameScore;
 
   private BowlingGameScoreCalculator bowlingGameScoreCalculator;
@@ -23,11 +23,11 @@ public class BowlingGameScoreCalculatorShould {
   public static Collection<Object[]> data() {
     return asList(
         new Object[][] {
-            {"X|",    10},
-            {"X|64",  10 + 6 + 4},
-            {"9-|",   9},
-            {"5/|",   10},
-            {"5/|23", 12}
+            { new Frames("X|"),    10         },
+            { new Frames("X|64"),  10 + 6 + 4 },
+            { new Frames("9-|"),   9          },
+            { new Frames("5/|"),   5 + 5      },
+            { new Frames("5/|23"), 5 + 5 + 2  }
         }
     );
   }
@@ -37,7 +37,7 @@ public class BowlingGameScoreCalculatorShould {
     bowlingGameScoreCalculator = new BowlingGameScoreCalculator();
   }
 
-  public BowlingGameScoreCalculatorShould(String inputFrames, int expectedFrameScore) {
+  public BowlingGameScoreCalculatorShould(Frames inputFrames, int expectedFrameScore) {
     this.inputFrames = inputFrames;
     this.expectedFrameScore = expectedFrameScore;
   }
@@ -48,5 +48,5 @@ public class BowlingGameScoreCalculatorShould {
     assertThat(getFrameScoreFor(inputFrames), is(expectedFrameScore));
   }
 
-  private int getFrameScoreFor(String frames) {return bowlingGameScoreCalculator.evaluate(frames, 1);}
+  private int getFrameScoreFor(Frames frames) {return bowlingGameScoreCalculator.evaluate(frames, 1);}
 }
