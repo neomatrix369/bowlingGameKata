@@ -3,20 +3,21 @@ package com.codurance;
 import static com.codurance.ThrowType.SPARE;
 import static com.codurance.ThrowType.STRIKE;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Frame {
   private static final int FIRST_THROW = 0;
   private static final int SECOND_THROW = 1;
 
-  private final List<Throw> throwsList = new ArrayList<>();
+  private final Throw firstThrow;
+  private final Throw secondThrow;
 
   public Frame(String throwsInAFrame) {
     final String[] splitThrows = throwsInAFrame.split("");
 
-    for (String eachThrow: splitThrows) {
-      this.throwsList.add(new Throw(eachThrow));
+    firstThrow = new Throw(splitThrows[0]);
+    if (splitThrows.length > 1) {
+      secondThrow = new Throw(splitThrows[1]);
+    } else {
+      secondThrow = new Throw("");
     }
   }
 
@@ -25,19 +26,19 @@ public class Frame {
   }
 
   public Throw firstThrow() {
-    return throwsList.get(FIRST_THROW);
+    return firstThrow;
   }
 
   public Throw secondThrow() {
-    return throwsList.get(SECOND_THROW);
+    return secondThrow;
   }
 
   public int getScore() {
-    return firstThrow().getScore() + secondThrow().getScore();
+    return firstThrow.getScore() + secondThrow.getScore();
   }
 
   public int getFirstThrowScore() {
-    return firstThrow().getScore();
+    return firstThrow.getScore();
   }
 
   public int calculateStrikeScore(Frame nextFrame) {
@@ -50,6 +51,6 @@ public class Frame {
 
   @Override
   public String toString() {
-    return String.format("%s", throwsList);
+    return String.format("%s,%s", firstThrow, secondThrow);
   }
 }
