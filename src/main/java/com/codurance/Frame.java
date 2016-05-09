@@ -4,9 +4,6 @@ import static com.codurance.ThrowType.SPARE;
 import static com.codurance.ThrowType.STRIKE;
 
 public class Frame {
-  private static final int FIRST_THROW = 0;
-  private static final int SECOND_THROW = 1;
-
   private final Throw firstThrow;
   private final Throw secondThrow;
 
