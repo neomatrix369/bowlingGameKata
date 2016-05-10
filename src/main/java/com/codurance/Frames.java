@@ -12,12 +12,11 @@ public class Frames {
 
   private static final String EMPTY_STRING_REPLACEMENT = "00";
 
-  private final List<Frame> list;
+  private final List<Frame> list = new ArrayList<>();
 
   public Frames(String frames) {
     String[] splitFrames = frames.split(FRAME_SEPARATOR);
 
-    list = new ArrayList<>();
     for (String eachFrameAsString: splitFrames) {
       list.add(new Frame(eachFrameAsString));
     }
