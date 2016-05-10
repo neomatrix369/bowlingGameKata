@@ -4,6 +4,9 @@ import static com.codurance.ThrowType.SPARE;
 import static com.codurance.ThrowType.STRIKE;
 
 public abstract class Frame {
+  private static final String NO_THROW = "0";
+  private static final String NO_THROWS = "00";
+
   protected final Throw firstThrow;
   protected final Throw secondThrow;
 
@@ -14,7 +17,7 @@ public abstract class Frame {
     if (splitThrows.length > 1) {
       secondThrow = new Throw(splitThrows[1]);
     } else {
-      secondThrow = new Throw("");
+      secondThrow = new Throw(NO_THROW);
     }
   }
 
@@ -48,5 +51,9 @@ public abstract class Frame {
 
   public int getSecondThrow() {
     return secondThrow.getScore();
+  }
+
+  public static Frame createDummyFrame() {
+    return new DummyFrame(NO_THROWS);
   }
 }
