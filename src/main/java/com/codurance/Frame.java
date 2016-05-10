@@ -3,9 +3,9 @@ package com.codurance;
 import static com.codurance.ThrowType.SPARE;
 import static com.codurance.ThrowType.STRIKE;
 
-public class Frame {
-  private final Throw firstThrow;
-  private final Throw secondThrow;
+public abstract class Frame {
+  protected final Throw firstThrow;
+  protected final Throw secondThrow;
 
   public Frame(String throwsInAFrame) {
     final String[] splitThrows = throwsInAFrame.split("");
@@ -18,36 +18,35 @@ public class Frame {
     }
   }
 
-  public boolean isA(ThrowType throwType) {
-    return firstThrow().isSameAs(throwType) || secondThrow().isSameAs(throwType);
-  }
+  public abstract int getScore(Frame nextFrame);
 
-  public Throw firstThrow() {
-    return firstThrow;
-  }
-
-  public Throw secondThrow() {
-    return secondThrow;
-  }
-
-  public int getScore() {
-    return firstThrow.getScore() + secondThrow.getScore();
-  }
-
-  public int getFirstThrowScore() {
-    return firstThrow.getScore();
-  }
-
-  public int calculateStrikeScore(Frame nextFrame) {
-    return STRIKE.getScore() + nextFrame.getScore();
-  }
-
-  public int calculateSpareScore(Frame nextFrame) {
-    return SPARE.getScore() + nextFrame.getFirstThrowScore();
+  protected int getScore() {
+    return getFirstThrow() + getSecondThrow();
   }
 
   @Override
   public String toString() {
     return String.format("%s,%s", firstThrow, secondThrow);
+  }
+
+  public static Frame create(String eachFrameAsString) {
+    if (STRIKE.isSameAs(eachFrameAsString)) {
+      return new StrikeFrame(eachFrameAsString);
+    } else if (SPARE.isSameAs(eachFrameAsString.substring(1))) {
+      return new SpareFrame(eachFrameAsString);
+    }
+    return new PartiallyCompletedFrame(eachFrameAsString);
+  }
+
+  public int calculateScoreWith(Frame nextFrame) {
+    return getScore(nextFrame);
+  }
+
+  public int getFirstThrow() {
+    return firstThrow.getScore();
+  }
+
+  public int getSecondThrow() {
+    return secondThrow.getScore();
   }
 }

@@ -1,8 +1,5 @@
 package com.codurance;
 
-import static com.codurance.ThrowType.SPARE;
-import static com.codurance.ThrowType.STRIKE;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,11 +11,11 @@ public class Frames {
 
   private final List<Frame> list = new ArrayList<>();
 
-  public Frames(String frames) {
-    String[] splitFrames = frames.split(FRAME_SEPARATOR);
+  public Frames(String framesAsString) {
+    String[] splitFrames = framesAsString.split(FRAME_SEPARATOR);
 
     for (String eachFrameAsString: splitFrames) {
-      list.add(new Frame(eachFrameAsString));
+      list.add(Frame.create(eachFrameAsString));
     }
   }
 
@@ -30,24 +27,19 @@ public class Frames {
 
     Frame thisFrame = getFrame(frameIndex);
     Frame nextFrame = getFrame(frameIndex + 1);
-    if (thisFrame.isA(STRIKE)) {
-      return thisFrame.calculateStrikeScore(nextFrame);
-    } else if (thisFrame.isA(SPARE)) {
-      return thisFrame.calculateSpareScore(nextFrame);
-    }
 
-    return thisFrame.getScore();
+    return thisFrame.calculateScoreWith(nextFrame);
   }
 
   private Frame getFrame(int frameIndex) {
     if (frameIndex >= list.size()) {
-      return new Frame(EMPTY_STRING_REPLACEMENT);
+      return new PartiallyCompletedFrame(EMPTY_STRING_REPLACEMENT);
     }
     return list.get(frameIndex);
   }
 
   @Override
   public String toString() {
-    return String.format("Frames{%s}", list);
+    return String.format("Frames:{%s}", list);
   }
 }

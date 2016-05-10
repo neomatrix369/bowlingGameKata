@@ -17,7 +17,8 @@ public class Throw {
     return parseInt(throwOutcome);
   }
 
-  public boolean isSameAs(ThrowType throwType) {
-    return throwType.isSameAs(throwOutcome);
+  @Override
+  public String toString() {
+    return String.format("%s", throwOutcome);
   }
 }
