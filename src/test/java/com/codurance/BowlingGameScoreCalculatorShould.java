@@ -24,7 +24,7 @@ public class BowlingGameScoreCalculatorShould {
   public static Collection<Object[]> data() {
     return asList(
         new Object[][] {
-            { new Frames("X|"),       10                 },
+            { new Frames("X"),        10                 },
             { new Frames("X|64"),     10 + 6 + 4 + 6 + 4 },
             { new Frames("9-|"),       9                 },
             { new Frames("-6|"),       6                 },
@@ -33,6 +33,8 @@ public class BowlingGameScoreCalculatorShould {
             { new Frames("-6|9-|"),    6 + 9             },
             { new Frames("-6|5/|9-"),  6 + 10 + 9 + 9    },
             { new Frames("-6|9-|5/"),  6 + 9 + 10        },
+            { new Frames("X|X|X|X|X|X|X|X|X|X"),
+                                     (10 + 10 + 10) * 10 },
         }
     );
   }

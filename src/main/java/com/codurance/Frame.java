@@ -4,8 +4,8 @@ import static com.codurance.ThrowType.SPARE;
 import static com.codurance.ThrowType.STRIKE;
 
 public abstract class Frame {
-  private static final String NO_THROW = "0";
-  private static final String NO_THROWS = "00";
+  private static final String NO_THROW = "";
+  private static final String NO_THROWS = "";
 
   protected final Throw firstThrow;
   protected final Throw secondThrow;

@@ -19,7 +19,8 @@ public class Frames {
   public int calculateScore() {
     int frameIndex = 0;
     int frameScore = 0;
-    for (Frame frame: listOfFrames) {
+
+    while (frameIndex < listOfFrames.size()) {
       Frame thisFrame = getFrameFor(frameIndex);
       Frame nextFrame = getFrameFor(frameIndex + 1);
 
