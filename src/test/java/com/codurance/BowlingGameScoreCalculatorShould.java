@@ -47,8 +47,6 @@ public class BowlingGameScoreCalculatorShould {
   @Test
   public void
   calculate_frame_score_from_the_input_frames() {
-    assertThat(getFrameScoreFor(inputFrames), is(expectedFrameScore));
+    assertThat(bowlingGameScoreCalculator.evaluate(inputFrames, 1), is(expectedFrameScore));
   }
-
-  private int getFrameScoreFor(Frames frames) {return bowlingGameScoreCalculator.evaluate(frames, 1);}
 }
