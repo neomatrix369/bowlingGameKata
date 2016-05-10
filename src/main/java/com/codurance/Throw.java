@@ -1,6 +1,6 @@
 package com.codurance;
 
-import static com.codurance.ThrowType.MISS;
+import static com.codurance.ThrowType.*;
 import static java.lang.Integer.parseInt;
 
 public class Throw {
@@ -14,6 +14,7 @@ public class Throw {
     if (MISS.isSameAs(throwOutcome)) {
       return MISS.getScore();
     }
+
     return parseInt(throwOutcome);
   }
 
