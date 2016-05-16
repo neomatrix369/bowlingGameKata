@@ -17,11 +17,11 @@ public class BowlingGameScoreCalculatorShould {
 
   private BowlingGameScoreCalculator bowlingGameScoreCalculator;
 
-  private Frame throwsInAFrame;
+  private String turns;
   private int expectedScore;
 
-  public BowlingGameScoreCalculatorShould(Frame throwsInAFrame, int expectedScore) {
-    this.throwsInAFrame = throwsInAFrame;
+  public BowlingGameScoreCalculatorShould(String turns, int expectedScore) {
+    this.turns = turns;
     this.expectedScore = expectedScore;
   }
 
@@ -29,8 +29,10 @@ public class BowlingGameScoreCalculatorShould {
   public static Collection<Object[]> data() {
     return asList(
         new Object[][] {
-            {new Frame("1"), 1},
-            {new Frame("11"), 2}
+            {"1-", 1},
+            {"-1", 1},
+            {"11", 2},
+            {"21", 3},
         }
     );
   }
@@ -42,6 +44,6 @@ public class BowlingGameScoreCalculatorShould {
 
   @Test public void
   calculate_the_score_of_throws_in_a_frames() {
-      assertThat(bowlingGameScoreCalculator.evaluate(throwsInAFrame), is(expectedScore));
+      assertThat(bowlingGameScoreCalculator.evaluate(turns), is(expectedScore));
   } 
 }
