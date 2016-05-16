@@ -22,7 +22,8 @@ public class BowlingGameScoreCalculator {
           break;
         case SPARE_THROW:
         case STRIKE:
-          return 10;
+          turnScore = 10;
+          break;
         default:
           turnScore = parseInt(pinsKnocked);
           break;
