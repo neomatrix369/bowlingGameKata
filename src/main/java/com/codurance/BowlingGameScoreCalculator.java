@@ -6,6 +6,8 @@ public class BowlingGameScoreCalculator {
 
   private static final String MISSED_THROW = "-";
   private static final String SPARE_THROW = "/";
+  private static final String STRIKE = "X";
+
   private static final String SPLIT_DELIMETER = "";
 
   public int evaluate(String turns) {
@@ -19,6 +21,7 @@ public class BowlingGameScoreCalculator {
           turnScore = 0;
           break;
         case SPARE_THROW:
+        case STRIKE:
           return 10;
         default:
           turnScore = parseInt(turn);

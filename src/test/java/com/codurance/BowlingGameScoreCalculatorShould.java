@@ -34,6 +34,7 @@ public class BowlingGameScoreCalculatorShould {
             {"11",  2},
             {"21",  3},
             {"2/", 10},
+            {"X",  10}
         }
     );
   }
