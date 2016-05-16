@@ -11,12 +11,12 @@ public class BowlingGameScoreCalculator {
   private static final String SPLIT_DELIMETER = "";
 
   public int evaluate(String turns) {
-    String[] turnsSplit = turns.split(SPLIT_DELIMETER);
+    String[] splitTurns = turns.split(SPLIT_DELIMETER);
 
     int score = 0;
     int turnScore;
-    for (String turn: turnsSplit) {
-      switch (turn) {
+    for (String pinsKnocked: splitTurns) {
+      switch (pinsKnocked) {
         case MISSED_THROW:
           turnScore = 0;
           break;
@@ -24,7 +24,7 @@ public class BowlingGameScoreCalculator {
         case STRIKE:
           return 10;
         default:
-          turnScore = parseInt(turn);
+          turnScore = parseInt(pinsKnocked);
           break;
       }
 
