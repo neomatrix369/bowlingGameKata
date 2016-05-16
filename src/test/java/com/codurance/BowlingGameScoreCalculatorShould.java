@@ -17,10 +17,10 @@ public class BowlingGameScoreCalculatorShould {
 
   private BowlingGameScoreCalculator bowlingGameScoreCalculator;
 
-  private String throwsInAFrame;
+  private Frame throwsInAFrame;
   private int expectedScore;
 
-  public BowlingGameScoreCalculatorShould(String throwsInAFrame, int expectedScore) {
+  public BowlingGameScoreCalculatorShould(Frame throwsInAFrame, int expectedScore) {
     this.throwsInAFrame = throwsInAFrame;
     this.expectedScore = expectedScore;
   }
@@ -29,7 +29,8 @@ public class BowlingGameScoreCalculatorShould {
   public static Collection<Object[]> data() {
     return asList(
         new Object[][] {
-            {"X", 10}
+            {new Frame("1"), 1},
+            {new Frame("11"), 2}
         }
     );
   }
