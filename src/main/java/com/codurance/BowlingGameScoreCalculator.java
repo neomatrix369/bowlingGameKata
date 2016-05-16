@@ -14,12 +14,15 @@ public class BowlingGameScoreCalculator {
     int score = 0;
     int turnScore;
     for (String turn: turnsSplit) {
-      if (turn.equals(MISSED_THROW)) {
-        turnScore = 0;
-      } else if (turn.equals(SPARE_THROW)) {
-        return 10;
-      } else {
-        turnScore = parseInt(turn);
+      switch (turn) {
+        case MISSED_THROW:
+          turnScore = 0;
+          break;
+        case SPARE_THROW:
+          return 10;
+        default:
+          turnScore = parseInt(turn);
+          break;
       }
 
       score = score + turnScore;
