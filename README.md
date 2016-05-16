@@ -35,7 +35,7 @@ X indicates a strike
 The characters after the || indicate bonus balls
 X  |    X|    X|   X  |X   |X  |X  |  X|  X  |X ||X   X
 X|X|X + X|X + X|X + X|X  X|X  X|X  X|X  X|X X|X  X|X X|X X
-=30  + 30  + 30  + 30  + 30 + 30 + 30 + 30 + 30 + 30 + 10 + 10
+=30  + 30  + 30  + 30  + 30 + 30 + 30 + 30 + 30 + 30 
 
 
 Ten strikes on the first ball of all ten frames.

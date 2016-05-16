@@ -1,10 +1,13 @@
 package com.codurance;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static java.util.Arrays.asList;
 
 import java.util.Collection;
 
 import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
@@ -14,10 +17,19 @@ public class BowlingGameScoreCalculatorShould {
 
   private BowlingGameScoreCalculator bowlingGameScoreCalculator;
 
+  private String throwsInAFrame;
+  private int expectedScore;
+
+  public BowlingGameScoreCalculatorShould(String throwsInAFrame, int expectedScore) {
+    this.throwsInAFrame = throwsInAFrame;
+    this.expectedScore = expectedScore;
+  }
+
   @Parameters( name = "{index}: {0} = {1}" )
   public static Collection<Object[]> data() {
     return asList(
         new Object[][] {
+            {"X", 10}
         }
     );
   }
@@ -27,4 +39,8 @@ public class BowlingGameScoreCalculatorShould {
     bowlingGameScoreCalculator = new BowlingGameScoreCalculator();
   }
 
+  @Test public void
+  calculate_the_score_of_throws_in_a_frames() {
+      assertThat(bowlingGameScoreCalculator.evaluate(throwsInAFrame), is(expectedScore));
+  } 
 }
