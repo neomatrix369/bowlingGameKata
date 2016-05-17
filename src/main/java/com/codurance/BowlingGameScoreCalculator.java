@@ -39,6 +39,6 @@ public class BowlingGameScoreCalculator {
   }
 
   private int parseToNumber(String roll) {
-    return roll.equals(NO_PINS) ? 0 : parseInt(roll);
+    return roll.equals(NO_PINS) || roll.equals(MISSED_ROLL) ? 0 : parseInt(roll);
   }
 }
