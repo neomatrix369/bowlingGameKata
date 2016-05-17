@@ -4,54 +4,41 @@ import static java.lang.Integer.parseInt;
 
 public class BowlingGameScoreCalculator {
 
-  private static final String TURNS_SEPARATOR = "";
+  private static final String MISSED_ROLL = "-";
+  private static final String SPARE_ROLL = "/";
+  private static final String NO_PINS = "";
 
-  private static final String MISSED_THROW = "-";
-  private static final String SPARE_THROW = "/";
-  private static final String NO_THROW = "";
-
-  public int evaluate(String turns) {
-    String[] splitTurns = turns.split(TURNS_SEPARATOR);
-
+  public int evaluate(String rolls) {
     int score = 0;
-    int index = 0;
-    while (index < turns.length()) {
-      String turn = splitTurns[index];
-      String nextTurn = "";
-      if (index < turns.length() - 1) {
-        nextTurn = splitTurns[index + 1];
-        if (turn.equals(SPARE_THROW) &&
-            index == 19) {
-          nextTurn = "";
-        }
-      }
-
-      score += getScoreForTheThrow(turn, nextTurn);
-      index++;
+    for (int index = 0; index < rolls.length(); index++) {
+      String roll = rollAt(rolls, index);
+      String nextRoll = rollAt(rolls, index + 1);
+      score += scoreFor(roll, nextRoll, index);
     }
-
     return score;
   }
 
-  private int getScoreForTheThrow(String thisThrow, String nextThrow) {
-    if (thisThrow.equals(NO_THROW) ||
-        thisThrow.equals(MISSED_THROW) ||
-        nextThrow.equals(SPARE_THROW)) {
-      return 0;
-    }
-
-    if (thisThrow.equals(SPARE_THROW)) {
-      return 10 + parseToNumber(nextThrow);
-    }
-
-    return parseToNumber(thisThrow);
+  private String rollAt(String rolls, int index) {
+    return index <= rolls.length() - 1
+                ? String.valueOf(rolls.charAt(index))
+                : "";
   }
 
-  private int parseToNumber(String nextTurn) {
-    if (nextTurn.equals(NO_THROW)) {
+  private int scoreFor(String roll, String nextRoll, int index) {
+    if (roll.equals(NO_PINS) ||
+        roll.equals(MISSED_ROLL) ||
+        nextRoll.equals(SPARE_ROLL)) {
       return 0;
     }
 
-    return parseInt(nextTurn);
+    if (roll.equals(SPARE_ROLL)) {
+      return 10 + ((index < 19) ? parseToNumber(nextRoll) : 0);
+    }
+
+    return parseToNumber(roll);
+  }
+
+  private int parseToNumber(String roll) {
+    return roll.equals(NO_PINS) ? 0 : parseInt(roll);
   }
 }
