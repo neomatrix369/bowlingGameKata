@@ -29,12 +29,17 @@ public class BowlingGameScoreCalculatorShould {
   public static Collection<Object[]> data() {
     return asList(
         new Object[][] {
-            {"11111111111111111111", 20},
-            {"12131415161718191213", 59},
-            {"-2-3-4-5-6-7-8-9-2-3", 49},
+            {"11111111111111111111",   20},
+            {"12131415161718191213",   59},
+            {"-2-3-4-5-6-7-8-9-2-3",   49},
             {"1/2/3/4/5/6/7/8/9/1/2", 147},
             {"1/2/3/4/5/6/-/8/9/1/-", 138},
-            {"XXXXXXXXXXXX", 300}
+            {"XXXXXXXXXXXX",          300},
+            {"XXXXXXXXXXX-",          290},
+            {"XXXXXXXXXX-X",          280},
+            {"XXXXXXXXXX11",          273},
+            {"XXXXXXXXXX--",          270},
+            {"X12XXXXXXXXXXX",        256},
         }
     );
   }

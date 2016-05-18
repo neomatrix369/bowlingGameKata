@@ -11,19 +11,29 @@ public class BowlingGameScoreCalculator {
 
   public int evaluate(String rolls) {
     int score = 0;
-    for (int index = 0; index < rolls.length(); index++) {
+    int index = 0;
+    int frameCount = 0;
+
+    while (frameCount < 10) {
       String roll = rollAt(rolls, index);
       String nextRoll = rollAt(rolls, index + 1);
       String nextToNextRoll = rollAt(rolls, index + 2);
+
       score += scoreFor(roll, nextRoll, nextToNextRoll, index);
+
+      index++;
+
+      if (roll.equals(STRIKE_ROLL) || roll.equals(SPARE_ROLL) || (index % 2 == 0)) {
+        frameCount++;
+      }
     }
     return score;
   }
 
   private String rollAt(String rolls, int index) {
-    return index <= rolls.length() - 1
-                ? String.valueOf(rolls.charAt(index))
-                : "";
+    return (index <= rolls.length() - 1)
+        ? String.valueOf(rolls.charAt(index))
+        : "";
   }
 
   private int scoreFor(String roll, String nextRoll, String nextToNextRoll, int index) {
@@ -46,9 +56,9 @@ public class BowlingGameScoreCalculator {
     return parseToNumber(roll);
   }
 
-  private boolean isBonusBallFromSpares(int index) {return index <  19;}
+  private boolean isBonusBallFromSpares(int index) {return index < 20;}
 
-  private boolean isBonusBallFromStrikes(int index) {return index < 9;}
+  private boolean isBonusBallFromStrikes(int index) {return index < 19;}
 
   private int parseToNumber(String roll) {
     return roll.equals(NO_PINS) || roll.equals(MISSED_ROLL)
