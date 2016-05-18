@@ -7,13 +7,15 @@ public class BowlingGameScoreCalculator {
   private static final String MISSED_ROLL = "-";
   private static final String SPARE_ROLL = "/";
   private static final String NO_PINS = "";
+  private static final String STRIKE_ROLL = "X";
 
   public int evaluate(String rolls) {
     int score = 0;
     for (int index = 0; index < rolls.length(); index++) {
       String roll = rollAt(rolls, index);
       String nextRoll = rollAt(rolls, index + 1);
-      score += scoreFor(roll, nextRoll, index);
+      String nextToNextRoll = rollAt(rolls, index + 2);
+      score += scoreFor(roll, nextRoll, nextToNextRoll, index);
     }
     return score;
   }
@@ -24,7 +26,7 @@ public class BowlingGameScoreCalculator {
                 : "";
   }
 
-  private int scoreFor(String roll, String nextRoll, int index) {
+  private int scoreFor(String roll, String nextRoll, String nextToNextRoll, int index) {
     if (roll.equals(NO_PINS) ||
         roll.equals(MISSED_ROLL) ||
         nextRoll.equals(SPARE_ROLL)) {
@@ -32,13 +34,25 @@ public class BowlingGameScoreCalculator {
     }
 
     if (roll.equals(SPARE_ROLL)) {
-      return 10 + ((index < 19) ? parseToNumber(nextRoll) : 0);
+      return 10 + (isBonusBallFromSpares(index) ? parseToNumber(nextRoll) : 0);
+    }
+
+    if (roll.equals(STRIKE_ROLL)) {
+      return 10
+          + (isBonusBallFromStrikes(index) ? parseToNumber(nextRoll) : 0)
+          + (isBonusBallFromStrikes(index) ? parseToNumber(nextToNextRoll) : 0);
     }
 
     return parseToNumber(roll);
   }
 
+  private boolean isBonusBallFromSpares(int index) {return index <  19;}
+
+  private boolean isBonusBallFromStrikes(int index) {return index < 9;}
+
   private int parseToNumber(String roll) {
-    return roll.equals(NO_PINS) || roll.equals(MISSED_ROLL) ? 0 : parseInt(roll);
+    return roll.equals(NO_PINS) || roll.equals(MISSED_ROLL)
+        ? 0
+        : roll.equals(STRIKE_ROLL) ? 10 : parseInt(roll);
   }
 }
