@@ -44,21 +44,19 @@ public class BowlingGameScoreCalculator {
     }
 
     if (roll.equals(SPARE_ROLL)) {
-      return 10 + (isBonusBallFromSpares(index) ? parseToNumber(nextRoll) : 0);
+      return 10 + (isBonusBall(index) ? parseToNumber(nextRoll) : 0);
     }
 
     if (roll.equals(STRIKE_ROLL)) {
       return 10
-          + (isBonusBallFromStrikes(index) ? parseToNumber(nextRoll) : 0)
-          + (isBonusBallFromStrikes(index) ? parseToNumber(nextToNextRoll) : 0);
+          + (isBonusBall(index) ? parseToNumber(nextRoll) : 0)
+          + (isBonusBall(index) ? parseToNumber(nextToNextRoll) : 0);
     }
 
     return parseToNumber(roll);
   }
 
-  private boolean isBonusBallFromSpares(int index) {return index < 20;}
-
-  private boolean isBonusBallFromStrikes(int index) {return index < 19;}
+  private boolean isBonusBall(int index) {return index < 20;}
 
   private int parseToNumber(String roll) {
     return roll.equals(NO_PINS) || roll.equals(MISSED_ROLL)
