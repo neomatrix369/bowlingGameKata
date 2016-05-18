@@ -47,7 +47,9 @@ public class BowlingGameScoreCalculator {
       return 10 + (isBonusBall(index) ? parseToNumber(nextRoll) : 0);
     }
 
-    if (roll.equals(STRIKE_ROLL)) {
+    if (roll.equals(STRIKE_ROLL) && nextToNextRoll.equals(SPARE_ROLL)) {
+      return 20;
+    } else if (roll.equals(STRIKE_ROLL)) {
       return 10
           + (isBonusBall(index) ? parseToNumber(nextRoll) : 0)
           + (isBonusBall(index) ? parseToNumber(nextToNextRoll) : 0);
@@ -61,6 +63,8 @@ public class BowlingGameScoreCalculator {
   private int parseToNumber(String roll) {
     return roll.equals(NO_PINS) || roll.equals(MISSED_ROLL)
         ? 0
-        : roll.equals(STRIKE_ROLL) ? 10 : parseInt(roll);
+        : roll.equals(STRIKE_ROLL)
+            ? 10
+            : parseInt(roll);
   }
 }
